@@ -93,9 +93,9 @@ namespace WPFSpark
             // Subscribe to the Mouse down/move/up events
             if (_fwPanelChild != null)
             {
-                _fwPanelChild.PreviewMouseDown += OnPreviewMouseDown;
-                _fwPanelChild.PreviewMouseMove += OnPreviewMouseMove;
-                _fwPanelChild.PreviewMouseUp   += OnPreviewMouseUp;
+                _fwPanelChild.MouseDown += OnMouseDown;
+                _fwPanelChild.MouseMove += OnMouseMove;
+                _fwPanelChild.MouseUp   += OnMouseUp;
             }
         }
 
@@ -138,9 +138,9 @@ namespace WPFSpark
             ((FrameworkElement) AssociatedObject).Loaded -= OnAssociatedObjectLoaded;
             if (_fwPanelChild != null)
             {
-                _fwPanelChild.PreviewMouseDown -= OnPreviewMouseDown;
-                _fwPanelChild.PreviewMouseMove -= OnPreviewMouseMove;
-                _fwPanelChild.PreviewMouseUp -= OnPreviewMouseUp;
+                _fwPanelChild.MouseDown -= OnMouseDown;
+                _fwPanelChild.MouseMove -= OnMouseMove;
+                _fwPanelChild.MouseUp -= OnMouseUp;
             }
         }
 
@@ -148,7 +148,7 @@ namespace WPFSpark
 
         #region Event Handlers
 
-        async void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        async void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != DragButton)
                 return;
@@ -157,7 +157,7 @@ namespace WPFSpark
             await _parentFwPanel.BeginFluidDragAsync(_fwPanelChild, position);
         }
 
-        private async void OnPreviewMouseMove(object sender, MouseEventArgs e)
+        private async void OnMouseMove(object sender, MouseEventArgs e)
         {
             var isDragging = false;
 
@@ -203,7 +203,7 @@ namespace WPFSpark
             await _parentFwPanel.FluidDragAsync(_fwPanelChild, position, positionInParent);
         }
 
-        private async void OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private async void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != DragButton)
                 return;
