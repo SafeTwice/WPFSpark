@@ -963,7 +963,7 @@ namespace WPFSpark
         /// <param name="positionInParent">Position where the user clicked w.r.t. the FluidWrapPanel</param>
         internal async Task FluidDragAsync(UIElement child, Point position, Point positionInParent)
         {
-            if ((child == null) || (!IsComposing) || (_dragElement == null))
+            if ((child == null) || (!IsComposing) || (child != _dragElement))
                 return;
 
             if (!_isDragging)
@@ -1225,32 +1225,36 @@ namespace WPFSpark
         /// <param name="positionInParent">Position where the user clicked w.r.t. the FluidWrapPanel (the parentFWPanel of the UIElement being dragged</param>
         internal async Task EndFluidDragAsync(UIElement child, Point position, Point positionInParent)
         {
-            if ((child == null) || (!IsComposing) || (_dragElement == null) || (!_isDragging))
+            if ((child == null) || (!IsComposing) || (child != _dragElement))
                 return;
 
-            // Call the event handler core on the Dispatcher. (Improves efficiency!)
-            await Dispatcher.InvokeAsync(() =>
+            if (_isDragging)
             {
-                _dragElement.RenderTransform = CreateTransform(positionInParent.X - _dragStartPoint.X,
-                                                               positionInParent.Y - _dragStartPoint.Y,
-                                                               DragScale,
-                                                               DragScale);
+                // Call the event handler core on the Dispatcher. (Improves efficiency!)
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    _dragElement.RenderTransform = CreateTransform(positionInParent.X - _dragStartPoint.X,
+                                                                   positionInParent.Y - _dragStartPoint.Y,
+                                                                   DragScale,
+                                                                   DragScale);
 
-                child.Opacity = NormalOpacity;
-                // Z-Index is set to 1 so that during the animation it does not go below other elements.
-                child.SetValue(ZIndexProperty, ZIndexIntermediate);
-                // Release the mouse capture
-                child.ReleaseMouseCapture();
+                    child.Opacity = NormalOpacity;
+                    // Z-Index is set to 1 so that during the animation it does not go below other elements.
+                    child.SetValue(ZIndexProperty, ZIndexIntermediate);
+                    // Release the mouse capture
+                    child.ReleaseMouseCapture();
 
-                // Reference used to set the Z-Index to 0 during the UpdateFluidLayout
-                _lastDragElement = _dragElement;
+                    // Reference used to set the Z-Index to 0 during the UpdateFluidLayout
+                    _lastDragElement = _dragElement;
 
-                _dragElement = null;
-                _isDragging = false;
-                _lastExchangedElement = null;
+                    _isDragging = false;
+                    _lastExchangedElement = null;
 
-                InvalidateVisual();
-            });
+                    InvalidateVisual();
+                });
+            }
+
+            _dragElement = null;
         }
 
         #endregion
