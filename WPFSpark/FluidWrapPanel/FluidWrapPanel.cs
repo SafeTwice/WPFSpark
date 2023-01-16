@@ -56,7 +56,7 @@ namespace WPFSpark
         public const int ZIndexDrag = 10;
         public static TimeSpan DefaultAnimationTimeWithoutEasing = TimeSpan.FromMilliseconds(200);
         public static TimeSpan DefaultAnimationTimeWithEasing = TimeSpan.FromMilliseconds(600);
-        public static TimeSpan FirstTimeAnimationDuration = TimeSpan.FromMilliseconds(320);
+        public static TimeSpan FirstTimeAnimationDuration = TimeSpan.FromMilliseconds(0);
 
         #endregion
 
@@ -685,7 +685,7 @@ namespace WPFSpark
                     if (!ReferenceEquals(child.Key, _dragElement))
                     {
                         // Animate the child to the new location
-                        CreateTransitionAnimation(child.Key, pos);
+                        CreateTransitionAnimation(child.Key, pos, false);
                     }
                 }
                 else
