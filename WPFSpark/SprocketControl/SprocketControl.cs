@@ -46,8 +46,6 @@ namespace WPFSpark
         private static readonly Color DEFAULT_TICK_COLOR = Color.FromArgb((byte)255, (byte)58, (byte)58, (byte)58);
         private const double DEFAULT_TICK_WIDTH = 3;
         private const int DEFAULT_TICK_COUNT = 12;
-        private readonly Size MINIMUM_CONTROL_SIZE = new Size(28, 28);
-        private const double MINIMUM_PEN_WIDTH = 2;
         private const double DEFAULT_START_ANGLE = 270;
         private const double MINIMUM_INNER_RADIUS_FACTOR = 0.175;
         private const double MINIMUM_OUTER_RADIUS_FACTOR = 0.3125;
@@ -788,10 +786,6 @@ namespace WPFSpark
         {
             renderTimer = new Timer(Interval);
             renderTimer.Elapsed += OnRenderTimerElapsed;
-
-            // Set the minimum size of the SprocketControl
-            MinWidth = MINIMUM_CONTROL_SIZE.Width;
-            MinWidth = MINIMUM_CONTROL_SIZE.Height;
 
             // Calculate the spoke points based on the current size
             CalculateSpokesPoints();
