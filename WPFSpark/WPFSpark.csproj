@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <Version>1.5.1-stw3</Version>
-    <AssemblyVersion>1.5.1.101</AssemblyVersion>
+    <Version>1.5.1-stw4</Version>
+    <AssemblyVersion>1.5.1.102</AssemblyVersion>
     <Authors>Ratish Philip</Authors>
     <RepositoryUrl>https://github.com/ratishphilip/wpfspark</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
